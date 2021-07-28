@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>事务与实战 | ++的手记</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/logo.png">
+    <meta name="description" content="不积跬步，无以至千里">
+    
+    <link rel="preload" href="/assets/css/0.styles.8740e9bc.css" as="style"><link rel="preload" href="/assets/js/app.04bbdb00.js" as="script"><link rel="preload" href="/assets/js/2.57a2f5e8.js" as="script"><link rel="preload" href="/assets/js/10.27d123b5.js" as="script"><link rel="prefetch" href="/assets/js/11.ce9359fc.js"><link rel="prefetch" href="/assets/js/12.299b7fbe.js"><link rel="prefetch" href="/assets/js/13.bc496efe.js"><link rel="prefetch" href="/assets/js/14.47accec1.js"><link rel="prefetch" href="/assets/js/15.e169a570.js"><link rel="prefetch" href="/assets/js/16.4323f070.js"><link rel="prefetch" href="/assets/js/17.e83345eb.js"><link rel="prefetch" href="/assets/js/18.e3337939.js"><link rel="prefetch" href="/assets/js/19.a7befe19.js"><link rel="prefetch" href="/assets/js/20.8af7b647.js"><link rel="prefetch" href="/assets/js/21.642e6971.js"><link rel="prefetch" href="/assets/js/22.961dfb24.js"><link rel="prefetch" href="/assets/js/23.98fcca64.js"><link rel="prefetch" href="/assets/js/3.4439d6bf.js"><link rel="prefetch" href="/assets/js/4.3a5df53e.js"><link rel="prefetch" href="/assets/js/5.f2bcb328.js"><link rel="prefetch" href="/assets/js/6.a99e98d2.js"><link rel="prefetch" href="/assets/js/7.2ca92b87.js"><link rel="prefetch" href="/assets/js/8.4b2e45c5.js"><link rel="prefetch" href="/assets/js/9.13695a49.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.8740e9bc.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="++的手记" class="logo"> <span class="site-name can-hide">++的手记</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java相关" class="dropdown-title"><span class="title">Java相关</span> <span class="arrow down"></span></button> <button type="button" aria-label="Java相关" class="mobile-dropdown-title"><span class="title">Java相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/base/" class="nav-link">
+  Java基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/java/advanced/" class="nav-link">
+  JavaWeb框架篇
+</a></li></ul></div></div><div class="nav-item"><a href="/database/" class="nav-link router-link-active">
+  数据库相关
+</a></div><div class="nav-item"><a href="/questions/" class="nav-link">
+  面试题汇总
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具箱" class="dropdown-title"><span class="title">工具箱</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具箱" class="mobile-dropdown-title"><span class="title">工具箱</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          在线编辑
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://tinypng.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  图片压缩
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>
+          在线服务
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://www.aliyun.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  阿里云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://cloud.tencent.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  腾讯云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>
+          博客指南
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://juejin.im/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://blog.csdn.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li></ul></div></div><div class="nav-item"><a href="https://gitee.com/lzj0_0/lzj_blog" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Gitee
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Java相关" class="dropdown-title"><span class="title">Java相关</span> <span class="arrow down"></span></button> <button type="button" aria-label="Java相关" class="mobile-dropdown-title"><span class="title">Java相关</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/base/" class="nav-link">
+  Java基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/java/advanced/" class="nav-link">
+  JavaWeb框架篇
+</a></li></ul></div></div><div class="nav-item"><a href="/database/" class="nav-link router-link-active">
+  数据库相关
+</a></div><div class="nav-item"><a href="/questions/" class="nav-link">
+  面试题汇总
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具箱" class="dropdown-title"><span class="title">工具箱</span> <span class="arrow down"></span></button> <button type="button" aria-label="工具箱" class="mobile-dropdown-title"><span class="title">工具箱</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          在线编辑
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://tinypng.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  图片压缩
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>
+          在线服务
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://www.aliyun.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  阿里云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://cloud.tencent.com/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  腾讯云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li><li class="dropdown-item"><h4>
+          博客指南
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="https://juejin.im/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  掘金
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-subitem"><a href="https://blog.csdn.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  CSDN
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></li></ul></div></div><div class="nav-item"><a href="https://gitee.com/lzj0_0/lzj_blog" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Gitee
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Redis</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/database/notes/Redis-1-NoSQL与Redis.html" class="sidebar-link">NoSQL与Redis</a></li><li><a href="/database/notes/Redis-2-事务与实战.html" class="active sidebar-link">事务与实战</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/database/notes/Redis-2-事务与实战.html#redis事务" class="sidebar-link">Redis事务</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/database/notes/Redis-2-事务与实战.html#监控" class="sidebar-link">监控</a></li></ul></li><li class="sidebar-sub-header"><a href="/database/notes/Redis-2-事务与实战.html#jedis" class="sidebar-link">Jedis</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/database/notes/Redis-2-事务与实战.html#事务" class="sidebar-link">事务</a></li></ul></li><li class="sidebar-sub-header"><a href="/database/notes/Redis-2-事务与实战.html#springboot整合" class="sidebar-link">SpringBoot整合</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/database/notes/Redis-2-事务与实战.html#自定义template模板" class="sidebar-link">自定义template模板</a></li></ul></li><li class="sidebar-sub-header"><a href="/database/notes/Redis-2-事务与实战.html#redis-conf详解" class="sidebar-link">Redis.conf详解</a></li></ul></li><li><a href="/database/notes/Redis-3-Redis集群与进阶.html" class="sidebar-link">Redis集群与进阶</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="事务与实战"><a href="#事务与实战" class="header-anchor">#</a> 事务与实战</h1> <h2 id="redis事务"><a href="#redis事务" class="header-anchor">#</a> Redis事务</h2> <ul><li><p>ACID，原子性，一致性，隔离性，持久性</p></li> <li><p>但<strong>Redis单条命令是原子性的，但Redis事务不保证原子性，没有隔离性</strong></p></li> <li><p>Redis事务本质：一组命令的集合，一个事务中的所有命令会被序列化，在事务执行的过程中，会按照顺序执行</p> <ul><li>一次性、顺序性、排它性</li></ul></li> <li><p>Redis事务分三个阶段：</p> <ul><li>开启事务 (multi)</li> <li>命令入队 (...)</li> <li>执行事务 (exec)</li></ul></li> <li><p>开启事务后命令不会立即执行，而是在执行事务的时候一块执行</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> multi <span class="token comment"># 开启事务</span>
+OK
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k1 v1
+QUEUED <span class="token comment"># 进入队列</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k2 v2
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> get k2
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k3 v3
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">exec</span> <span class="token comment"># 执行事务</span>
+<span class="token number">1</span><span class="token punctuation">)</span> OK
+<span class="token number">2</span><span class="token punctuation">)</span> OK
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> OK
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div></li> <li><p>放弃事务，一旦放弃，事务中的所有命令都不会执行</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> multi <span class="token comment"># 开启事务</span>
+OK
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k1 v1
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k2 v2
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k4 v4
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> DISCARD <span class="token comment"># 放弃事务</span>
+OK
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get k4
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div></li> <li><p>编译型异常</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 编译型异常(代码有问题，命令有错)，事务中所有的命令都不会被执行</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> multi
+OK
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k1 v1
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> getset k3 <span class="token comment"># 此处出现编译型异常，命令写法有误</span>
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR wrong number of arguments <span class="token keyword">for</span> <span class="token string">'getset'</span> <span class="token builtin class-name">command</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k5 v5
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">exec</span> <span class="token comment"># 执行事务发现错误</span>
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> EXECABORT Transaction discarded because of previous errors.
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get k5 <span class="token comment"># 发现事务中的命令没有执行</span>
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div></li> <li><p>运行时异常</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 运行时异常(1/0)，如果队列中存在语法性错误，那么执行命令的时候，除去错误语句，其他命令是可以正常执行的，所以没有原子性</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> multi
+OK
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k1 v1
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> incr k1 <span class="token comment"># 创造运行时异常，语法没错，但字符串无法自增，会出现运行时异常</span>
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k2 v2
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> k3 v3
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> get k3
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">exec</span> <span class="token comment"># 执行发现除了错误命令其他命令正常执行</span>
+<span class="token number">1</span><span class="token punctuation">)</span> OK
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR value is not an integer or out of range
+<span class="token number">3</span><span class="token punctuation">)</span> OK
+<span class="token number">4</span><span class="token punctuation">)</span> OK
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div></li></ul> <h3 id="监控"><a href="#监控" class="header-anchor">#</a> 监控</h3> <h4 id="悲观锁"><a href="#悲观锁" class="header-anchor">#</a> 悲观锁</h4> <ul><li>很悲观，认为什么时候都会出问题，无论做什么都会加锁，影响性能</li></ul> <h4 id="乐观锁"><a href="#乐观锁" class="header-anchor">#</a> 乐观锁</h4> <ul><li><p>很乐观，认为什么时候都不会出问题，所以不会上锁，更新数据的时候判断一下在此期间这个数据是否修改过。用一个version字段来处理，可以实现redis乐观锁操作</p> <ul><li>获取version</li> <li>更新的时候比较version</li></ul></li> <li><p>Redis监视测试</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 正常执行成功</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token function">watch</span> money <span class="token comment"># watch监视money</span>
+OK
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> multi <span class="token comment"># 开启事务</span>
+OK
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> DECRBY money <span class="token number">20</span>
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> INCRBY out <span class="token number">20</span>
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">exec</span> <span class="token comment"># 事务正常执行</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">80</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">20</span>
+<span class="token comment"># 在事务提交前money就被修改了，使用watch可以实现redis乐观锁操作</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token function">watch</span> money <span class="token comment"># 监视money，去拿money的version</span>
+OK
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> multi
+OK
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> DECRBY money <span class="token number">10</span>
+QUEUED
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> incrby out <span class="token number">10</span>
+QUEUED
+<span class="token punctuation">(</span> <span class="token comment"># 另一个客户端操作</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> get money
+<span class="token string">&quot;80&quot;</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> <span class="token builtin class-name">set</span> money <span class="token number">1000</span>
+OK
+<span class="token punctuation">)</span>
+<span class="token number">127.0</span>.0.1:6379<span class="token punctuation">(</span>TX<span class="token punctuation">)</span><span class="token operator">&gt;</span> <span class="token builtin class-name">exec</span> <span class="token comment"># 事务提交失败，所有命令不予执行。</span>
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
+<span class="token comment"># 取消检测命令。事务结束或者取消，无论是否成功，监视自动取消</span>
+<span class="token number">127.0</span>.0.1:637<span class="token operator"><span class="token file-descriptor important">9</span>&gt;</span> unwatch
+OK
+<span class="token comment"># watch相当于内置版本号，每次修改都有记录，所以不存在ABA问题</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br></div></div></li></ul> <h2 id="jedis"><a href="#jedis" class="header-anchor">#</a> Jedis</h2> <ul><li><p>我们要使用java来操作redis</p></li> <li><p>什么是Jedis？</p> <ul><li>Jedis是Redis官方推荐的java连接开发工具</li> <li>使用java操作Redis的中间件</li></ul></li> <li><p>测试</p> <ol><li><p>导入依赖</p> <div class="language-xml line-numbers-mode"><pre class="language-xml"><code><span class="token comment">&lt;!--导入jedis包--&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>redis.clients<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>jedis<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>3.3.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token comment">&lt;!--fastjson--&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>com.alibaba<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>fastjson<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>1.2.75<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div></li> <li><p>编码测试</p> <ol><li><p>连接数据库</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestPing</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 1. new Jedis对象</span>
+        <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span><span class="token string">&quot;192.168.88.22&quot;</span><span class="token punctuation">,</span> <span class="token number">6379</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// jedis所有的命令就是之前我们学习的所有指令</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>jedis<span class="token punctuation">.</span><span class="token function">ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 输出PONG表示成功连接</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div></li> <li><p>操作命令...</p></li> <li><p>断开连接：<code>jedis.close();</code></p></li></ol></li></ol></li></ul> <h3 id="事务"><a href="#事务" class="header-anchor">#</a> 事务</h3> <ul><li><p>实现事务</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestTX</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span><span class="token string">&quot;192.168.88.22&quot;</span><span class="token punctuation">,</span> <span class="token number">6379</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">JSONObject</span> jsonObject <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JSONObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        jsonObject<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">&quot;hello&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;world&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        jsonObject<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">&quot;name&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;cbc&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 开启事务</span>
+        <span class="token class-name">Transaction</span> multi <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">multi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> result <span class="token operator">=</span> jsonObject<span class="token punctuation">.</span><span class="token function">toJSONString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            multi<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&quot;user1&quot;</span><span class="token punctuation">,</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            multi<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&quot;user2&quot;</span><span class="token punctuation">,</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            multi<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 执行事务</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            multi<span class="token punctuation">.</span><span class="token function">discard</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 放弃事务</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>jedis<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">&quot;user1&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>jedis<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">&quot;user2&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            jedis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div></li> <li><p>乐观锁实现</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestTX</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span><span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span><span class="token string">&quot;192.168.88.22&quot;</span><span class="token punctuation">,</span> <span class="token number">6379</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        jedis<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&quot;money&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;10&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        jedis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">TestTX</span> testTX <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TestTX</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Jedis</span> jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span><span class="token string">&quot;192.168.88.22&quot;</span><span class="token punctuation">,</span> <span class="token number">6379</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 开启事务</span>
+        jedis<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&quot;money&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;100&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        jedis<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&quot;money&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Transaction</span> multi <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">multi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        testTX<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 开启修改线程</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token keyword">yield</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 让修改线程先跑</span>
+            <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 顺便休息一下保证修改线程跑完</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            multi<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&quot;money&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;1&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>multi<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//打印null表示乐观锁成功生效，命令没有执行</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            multi<span class="token punctuation">.</span><span class="token function">discard</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 放弃事务</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>jedis<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">&quot;money&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            jedis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div></li></ul> <h2 id="springboot整合"><a href="#springboot整合" class="header-anchor">#</a> SpringBoot整合</h2> <ul><li><p>SpringBoot操作数据：Spring-Data</p></li> <li><p>Spring-Data也是和SpringBoot齐名的项目</p></li> <li><p>说明：在springboot2.x之后，原来使用的jedis被替换为了lettuce</p> <ul><li>jedis：采用的是直连，多个线程操作的话是不安全的，如果想要避免不安全，就得使用jedis pool连接池，会导致其他问题，更像BIO模式</li> <li>lettuce：采用netty，实例可以在多个线程中共享，不存在线程不安全的情况，可以减少线程数量，更像NIO模式</li></ul></li> <li><p>测试</p> <ol><li><p>导入依赖</p> <div class="language-xml line-numbers-mode"><pre class="language-xml"><code><span class="token comment">&lt;!--操作redis--&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-boot-starter-data-redis<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div></li> <li><p>配置连接</p> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token comment"># 配置redis</span>
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 192.168.88.22
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div></li> <li><p>测试</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">void</span> <span class="token function">contextLoads</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// opsForValue 操作字符串 String BitMap</span>
+    <span class="token comment">// opsForList  操作List</span>
+    <span class="token comment">// opsForSet   操作Set</span>
+    <span class="token comment">// opsForHash  操作Hash</span>
+    <span class="token comment">// opsForZSet  操作ZSet</span>
+    <span class="token comment">// opsForGeo   操作Geo</span>
+    <span class="token comment">// opsForHyperLogLog   操作HyperLogLog</span>
+    <span class="token comment">// 除了以上基本的操作，我们常用的方法都可以直接通过redisTemplate点出来，比如事务和基本的CRUD</span>
+
+    <span class="token comment">// 获取redis的连接对象</span>
+    <span class="token comment">//RedisConnection connection = redisTemplate.getConnectionFactory().getConnection();</span>
+    <span class="token comment">//connection.flushDb();</span>
+
+    redisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&quot;mykey&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;你好&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>redisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">&quot;mykey&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div></li></ol></li> <li><p>默认的RedisTemplate没有过多的设置，redis对象都是需要序列化的</p></li> <li><p>默认的序列化方式是JDK序列化，会让我们的字符串转义，我们可能会使用json来序列化，就需要自己定义配置类</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">void</span> <span class="token function">contextLoads</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">JsonProcessingException</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 真实开发一般都使用json来传递对象</span>
+    <span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token string">&quot;你好&quot;</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">writeValueAsString</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 序列化，不序列化无法传输，也可以使用pojo类序列化</span>
+    redisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>redisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div></li> <li><p>pojo类序列化</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token comment">// 在企业中，我们的所有 pojo 类一般都会序列化</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token keyword">implements</span> <span class="token class-name">Serializable</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div></li></ul> <h3 id="自定义template模板"><a href="#自定义template模板" class="header-anchor">#</a> 自定义template模板</h3> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RedisConfig</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 编写我们自己的redisTemplate</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> <span class="token function">redisTemplate</span><span class="token punctuation">(</span><span class="token class-name">RedisConnectionFactory</span> redisConnectionFactory<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 为了开发方便，一般直接使用&lt;String, Object&gt;</span>
+        <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> template <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RedisTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        template<span class="token punctuation">.</span><span class="token function">setConnectionFactory</span><span class="token punctuation">(</span>redisConnectionFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// json序列化配置</span>
+        <span class="token class-name">Jackson2JsonRedisSerializer</span> <span class="token class-name">Jackson2JsonRedisSerializer</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jackson2JsonRedisSerializer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">ObjectMapper</span> mapper <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mapper<span class="token punctuation">.</span><span class="token function">setVisibility</span><span class="token punctuation">(</span><span class="token class-name">PropertyAccessor</span><span class="token punctuation">.</span>ALL<span class="token punctuation">,</span> <span class="token class-name">JsonAutoDetect<span class="token punctuation">.</span>Visibility</span><span class="token punctuation">.</span>ANY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mapper<span class="token punctuation">.</span><span class="token function">activateDefaultTyping</span><span class="token punctuation">(</span><span class="token class-name">LaissezFaireSubTypeValidator</span><span class="token punctuation">.</span>instance<span class="token punctuation">,</span>
+                <span class="token class-name">ObjectMapper<span class="token punctuation">.</span>DefaultTyping</span><span class="token punctuation">.</span>NON_FINAL<span class="token punctuation">,</span>
+                <span class="token class-name">JsonTypeInfo<span class="token punctuation">.</span>As</span><span class="token punctuation">.</span>PROPERTY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Jackson2JsonRedisSerializer</span><span class="token punctuation">.</span><span class="token function">setObjectMapper</span><span class="token punctuation">(</span>mapper<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// String 的序列化</span>
+        <span class="token class-name">StringRedisSerializer</span> stringRedisSerializer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringRedisSerializer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//key采用string的序列化方式</span>
+        template<span class="token punctuation">.</span><span class="token function">setKeySerializer</span><span class="token punctuation">(</span>stringRedisSerializer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//value采用jackson的序列化方式</span>
+        template<span class="token punctuation">.</span><span class="token function">setValueSerializer</span><span class="token punctuation">(</span><span class="token class-name">Jackson2JsonRedisSerializer</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//hash采用string的序列化方式</span>
+        template<span class="token punctuation">.</span><span class="token function">setHashKeySerializer</span><span class="token punctuation">(</span>stringRedisSerializer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//hash的value采用jackson的序列化方式</span>
+        template<span class="token punctuation">.</span><span class="token function">setHashKeySerializer</span><span class="token punctuation">(</span><span class="token class-name">Jackson2JsonRedisSerializer</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        template<span class="token punctuation">.</span><span class="token function">afterPropertiesSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> template<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><ul><li><p>Redis工具类</p> <ul><li>在真实开发中，一般都可以看到一个公司自己封装的RedisUtil</li></ul></li> <li><p>使用工具类</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">void</span> <span class="token function">contextLoads</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    redisUtil<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">,</span><span class="token string">&quot;cbc&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>redisUtil<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div></li></ul> <h2 id="redis-conf详解"><a href="#redis-conf详解" class="header-anchor">#</a> Redis.conf详解</h2> <ul><li><p>启动的时候，就需要配置文件启动</p></li> <li><p>容量单位不区分大小写，G和GB有区别，可以使用 include 组合多个配置问题，就像我们spring的import标签</p></li> <li><p>网络配置</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 指定 redis 只接收来自于该IP地址的请求，如果不进行设置，那么将处理所有请求</span>
+<span class="token builtin class-name">bind</span> <span class="token number">127.0</span>.0.1
+ 
+<span class="token comment"># 是否开启保护模式，默认开启。要是配置里没有指定bind和密码。开启该参数后，redis只会本地进行访问，拒绝外部访问。</span>
+<span class="token comment"># 要是开启了密码和bind，可以开启。否则最好关闭，设置为no</span>
+protected-mode <span class="token function">yes</span>
+ 
+<span class="token comment"># redis监听的端口号</span>
+port <span class="token number">6379</span>
+ 
+<span class="token comment"># 此参数确定了TCP连接中已完成队列(完成三次握手之后)的长度， 当然此值必须不大于Linux系统定义的</span>
+<span class="token comment"># /proc/sys/net/core/somaxconn值，默认是511，而Linux的默认参数值是128。当系统并发量大并且客</span>
+<span class="token comment"># 户端速度缓慢的时候，可以将这二个参数一起参考设定。该内核参数默认值一般是128，对于负载很大的服</span>
+<span class="token comment"># 务程序来说大大的不够。一般会将它修改为2048或者更大。在/etc/sysctl.conf中添加:net.core.somaxconn = 2048，</span>
+<span class="token comment"># 然后在终端中执行sysctl -p</span>
+tcp-backlog <span class="token number">511</span>
+ 
+<span class="token comment"># 此参数为设置客户端空闲超过timeout，服务端会断开连接，为0则服务端不会主动断开连接，不能小于0</span>
+<span class="token function">timeout</span> <span class="token number">0</span>
+ 
+<span class="token comment"># tcp keepalive参数。如果设置不为0，就使用配置tcp的SO_KEEPALIVE值，使用keepalive有两个好处:</span>
+<span class="token comment"># 检测挂掉的对端。降低中间设备出问题而导致网络看似连接却已经与对端端口的问题。在Linux内核中，</span>
+<span class="token comment"># 设置了keepalive，redis会定时给对端发送ack。检测到对端关闭需要两倍的设置值</span>
+tcp-keepalive <span class="token number">300</span>
+ 
+<span class="token comment"># 是否在后台执行，yes：后台运行；no：不是后台运行</span>
+daemonize <span class="token function">yes</span>
+ 
+<span class="token comment"># redis的进程文件</span>
+pidfile /var/run/redis/redis.pid
+ 
+<span class="token comment"># 指定了服务端日志的级别。级别包括：</span>
+<span class="token comment"># debug（很多信息，方便开发、测试）</span>
+<span class="token comment"># verbose（许多有用的信息，但是没有debug级别信息多）</span>
+<span class="token comment"># notice（适当的日志级别，适合生产环境）</span>
+<span class="token comment"># warn（只有非常重要的信息）</span>
+loglevel notice
+ 
+<span class="token comment"># 指定了记录日志的文件。空字符串的话，日志会打印到标准输出设备。后台运行的redis标准输出是/dev/null</span>
+logfile /usr/local/redis/var/redis.log
+ 
+ 
+<span class="token comment"># 是否打开记录syslog功能</span>
+<span class="token comment"># syslog-enabled no</span>
+ 
+<span class="token comment"># syslog的标识符。</span>
+<span class="token comment"># syslog-ident redis</span>
+ 
+<span class="token comment"># 日志的来源、设备</span>
+<span class="token comment"># syslog-facility local0</span>
+ 
+<span class="token comment"># 数据库的数量，默认使用的数据库是16。可以通过&quot;SELECT 【数据库序号】&quot;命令选择一个数据库，序号从0开始</span>
+databases <span class="token number">16</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br></div></div></li> <li><p>安全配置</p> <ul><li>命令配置密码：<code>config set requirepass &quot;123456&quot;</code></li> <li>登录：<code>auth 123456</code></li> <li>redis6.0以后建议使用acl用户代替密码了</li></ul> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># requirepass配置可以让用户使用AUTH命令来认证密码，才能使用其他命令。这让redis可以使用在不受信任的网络中。</span>
+<span class="token comment"># 为了保持向后的兼容性，可以注释该命令，因为大部分用户也不需要认证。使用requirepass的时候需要注意，</span>
+<span class="token comment"># 因为redis太快了，每秒可以认证15w次密码，简单的密码很容易被攻破，所以最好使用一个更复杂的密码</span>
+<span class="token comment"># requirepass cbcbcbc</span>
+
+<span class="token comment"># 把危险的命令给修改成其他名称。比如CONFIG命令可以重命名为一个很难被猜到的命令，这样用户不能使用，而内部工具还能接着使用</span>
+<span class="token comment"># rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52</span>
+<span class="token comment"># 设置成一个空的值，可以禁止一个命令</span>
+<span class="token comment"># rename-command CONFIG &quot;&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div></li> <li><p>快照配置</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># RDB核心规则配置 save &lt;指定时间间隔&gt; &lt;执行指定次数更新操作&gt;，满足条件就将内存中的数据同步到硬盘中。</span>
+<span class="token comment"># 官方出厂配置默认是900秒内有1个更改，300秒内有10个更改以及60秒内有10000个更改，则将内存中的数据快照写入磁盘。</span>
+<span class="token comment"># 若不想用RDB方案，可以把 save &quot;&quot; 的注释打开，下面三个注释</span>
+<span class="token comment"># save &quot;&quot;</span>
+save <span class="token number">900</span> <span class="token number">1</span>
+save <span class="token number">300</span> <span class="token number">10</span>
+save <span class="token number">60</span> <span class="token number">10000</span>
+ 
+<span class="token comment"># 当RDB持久化出现错误后，是否依然进行继续进行工作，yes：不能进行工作，no：可以继续进行工作，</span>
+<span class="token comment"># 可以通过info中的rdb_last_bgsave_status了解RDB持久化是否有错误</span>
+stop-writes-on-bgsave-error <span class="token function">yes</span>
+ 
+<span class="token comment"># 配置存储至本地数据库时是否压缩数据，默认为yes。Redis采用LZF压缩方式，但占用了一点CPU的时间。</span>
+<span class="token comment"># 若关闭该选项，但会导致数据库文件变的巨大。建议开启。</span>
+rdbcompression <span class="token function">yes</span>
+ 
+<span class="token comment"># 是否校验rdb文件;从rdb格式的第五个版本开始，在rdb文件的末尾会带上CRC64的校验和。</span>
+<span class="token comment"># 这跟有利于文件的容错性，但是在保存rdb文件的时候，会有大概10%的性能损耗，</span>
+<span class="token comment"># 所以如果你追求高性能，可以关闭该配置</span>
+rdbchecksum <span class="token function">yes</span>
+ 
+<span class="token comment"># 指定本地数据库文件名，一般采用默认的 dump.rdb</span>
+dbfilename dump.rdb
+ 
+<span class="token comment"># 数据目录，数据库的写入会在这个目录。rdb、aof文件也会写在这个目录</span>
+<span class="token function">dir</span> /usr/local/redis/var
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div></li> <li><p>主从复制配置</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 复制选项，slave复制对应的master。</span>
+<span class="token comment"># replicaof &lt;masterip&gt; &lt;masterport&gt;</span>
+ 
+<span class="token comment"># 如果master设置了requirepass，那么slave要连上master，需要有master的密码才行。</span>
+<span class="token comment"># masterauth就是用来配置master的密码，这样可以在连上master后进行认证。</span>
+<span class="token comment"># masterauth &lt;master-password&gt;</span>
+ 
+<span class="token comment"># 当从库同主机失去连接或者复制正在进行，从机库有两种运行方式：</span>
+<span class="token comment"># 1) 如果slave-serve-stale-data设置为yes(默认设置)，从库会继续响应客户端的请求。</span>
+<span class="token comment"># 2) 如果slave-serve-stale-data设置为no，INFO,replicaOF, AUTH, PING, SHUTDOWN, REPLCONF, ROLE,</span>
+<span class="token comment"># CONFIG, SUBSCRIBE, UNSUBSCRIBE,PSUBSCRIBE, PUNSUBSCRIBE, PUBLISH, PUBSUB,COMMAND, POST,</span>
+<span class="token comment"># HOST: and LATENCY命令之外的任何请求都会返回一个错误”SYNC with master in progress”</span>
+replica-serve-stale-data <span class="token function">yes</span>
+ 
+<span class="token comment"># 作为从服务器，默认情况下是只读的（yes），可以修改成NO，用于写（不建议）</span>
+<span class="token comment"># replica-read-only yes</span>
+ 
+<span class="token comment"># 是否使用socket方式复制数据。目前redis复制提供两种方式，disk和socket。如果新的slave连上来或者</span>
+<span class="token comment"># 重连的slave无法部分同步，就会执行全量同步，master会生成rdb文件。有2种方式：disk方式是master创建</span>
+<span class="token comment"># 一个新的进程把rdb文件保存到磁盘，再把磁盘上的rdb文件传递给slave。socket是master创建一个新的进</span>
+<span class="token comment"># 程，直接把rdb文件以socket的方式发给slave。disk方式的时候，当一个rdb保存的过程中，多个slave都能</span>
+<span class="token comment"># 共享这个rdb文件。socket的方式就的一个个slave顺序复制。在磁盘速度缓慢，网速快的情况下推荐用socket方式。</span>
+<span class="token comment"># repl-diskless-sync no</span>
+ 
+<span class="token comment"># diskless复制的延迟时间，防止设置为0。一旦复制开始，节点不会再接收新slave的复制请求直到下一个rdb传输。</span>
+<span class="token comment"># 所以最好等待一段时间，等更多的slave连上来</span>
+repl-diskless-sync-delay <span class="token number">5</span>
+ 
+<span class="token comment"># slave根据指定的时间间隔向服务器发送ping请求。时间间隔可以通过 repl_ping_slave_period 来设置，默认10秒。</span>
+<span class="token comment"># repl-ping-slave-period 10</span>
+ 
+<span class="token comment"># 复制连接超时时间。master和slave都有超时时间的设置。master检测到slave上次发送的时间超过repl-timeout，</span>
+<span class="token comment"># 即认为slave离线，清除该slave信息。slave检测到上次和master交互的时间超过repl-timeout，则认为master离线。</span>
+<span class="token comment"># 需要注意的是repl-timeout需要设置一个比repl-ping-slave-period更大的值，不然会经常检测到超时</span>
+<span class="token comment"># repl-timeout 60</span>
+ 
+ 
+<span class="token comment"># 是否禁止复制tcp链接的tcp nodelay参数，可传递yes或者no。默认是no，即使用tcp nodelay。</span>
+<span class="token comment"># 如果master设置了yes来禁止tcp nodelay设置，在把数据复制给slave的时候，会减少包的数量和更小的网络带宽。</span>
+<span class="token comment"># 但是这也可能带来数据的延迟。默认我们推荐更小的延迟，但是在数据量传输很大的场景下，建议选择yes</span>
+repl-disable-tcp-nodelay no
+ 
+<span class="token comment"># 复制缓冲区大小，这是一个环形复制缓冲区，用来保存最新复制的命令。这样在slave离线的时候，不需要完</span>
+<span class="token comment"># 全复制master的数据，如果可以执行部分同步，只需要把缓冲区的部分数据复制给slave，就能恢复正常复制状态。</span>
+<span class="token comment"># 缓冲区的大小越大，slave离线的时间可以更长，复制缓冲区只有在有slave连接的时候才分配内存。</span>
+<span class="token comment"># 没有slave的一段时间，内存会被释放出来，默认1m</span>
+<span class="token comment"># repl-backlog-size 1mb</span>
+ 
+<span class="token comment"># master没有slave一段时间会释放复制缓冲区的内存，repl-backlog-ttl用来设置该时间长度。单位为秒。</span>
+<span class="token comment"># repl-backlog-ttl 3600</span>
+ 
+<span class="token comment"># 当master不可用，Sentinel会根据slave的优先级选举一个master。最低的优先级的slave当选master。</span>
+<span class="token comment"># 而配置成0，永远不会被选举</span>
+replica-priority <span class="token number">100</span>
+ 
+<span class="token comment">#redis提供了可以让master停止写入的方式，如果配置了min-replicas-to-write，健康的slave的个数小于N，mater就禁止写入。</span>
+<span class="token comment"># master最少得有多少个健康的slave存活才能执行写命令。这个配置虽然不能保证N个slave都一定能接收到master的写操作，</span>
+<span class="token comment"># 但是能避免没有足够健康的slave的时候，master不能写入来避免数据丢失。设置为0是关闭该功能</span>
+<span class="token comment"># min-replicas-to-write 3</span>
+ 
+<span class="token comment"># 延迟小于min-replicas-max-lag秒的slave才认为是健康的slave</span>
+<span class="token comment"># min-replicas-max-lag 10</span>
+ 
+<span class="token comment"># 设置1或另一个设置为0禁用这个特性。</span>
+<span class="token comment"># Setting one or the other to 0 disables the feature.</span>
+<span class="token comment"># By default min-replicas-to-write is set to 0 (feature disabled) and</span>
+<span class="token comment"># min-replicas-max-lag is set to 10.</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br></div></div></li> <li><p>客户端配置</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 设置能连上redis的最大客户端连接数量。默认是10000个客户端连接。由于redis不区分连接是客户端连接还</span>
+<span class="token comment"># 是内部打开文件或者和slave连接等，所以maxclients最小建议设置到32。如果超过了maxclients，redis会给</span>
+<span class="token comment"># 新的连接发送’max number of clients reached’，并关闭连接</span>
+<span class="token comment"># maxclients 10000</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div></li> <li><p>内存配置</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#　redis配置的最大内存容量。当内存满了，需要配合maxmemory-policy策略进行处理。</span>
+<span class="token comment"># 注意slave的输出缓冲区是不计算在maxmemory内的。所以为了防止主机内存使用完，</span>
+<span class="token comment"># 建议设置的maxmemory需要更小一些</span>
+maxmemory <span class="token number">122000000</span>
+
+<span class="token comment"># 内存容量超过maxmemory后的处理策略：</span>
+<span class="token comment"># volatile-lru：利用LRU算法移除设置过过期时间的key</span>
+<span class="token comment"># volatile-random：随机移除设置过过期时间的key</span>
+<span class="token comment"># volatile-ttl：移除即将过期的key，根据最近过期时间来删除（辅以TTL）</span>
+<span class="token comment"># allkeys-lru：利用LRU算法移除任何key</span>
+<span class="token comment"># allkeys-random：随机移除任何key</span>
+<span class="token comment"># noeviction：不移除任何key，只是返回一个写错误</span>
+<span class="token comment"># 上面的这些驱逐策略，如果redis没有合适的key驱逐，对于写命令，还是会返回错误。redis将不再接收写请求，只接收get请求</span>
+<span class="token comment"># 写命令包括：set setnx setex append incr decr rpush lpush rpushx lpushx linsert lset rpoplpush sadd</span>
+<span class="token comment"># sinter sinterstore sunion sunionstore sdiff sdiffstore zadd zincrby zunionstore zinterstore hset</span>
+<span class="token comment"># hsetnx hmset hincrby incrby decrby getset mset msetnx exec sort</span>
+<span class="token comment"># maxmemory-policy noeviction</span>
+
+<span class="token comment"># lru检测的样本数。使用lru或者ttl淘汰算法，从需要淘汰的列表中随机选择sample个key，选出闲置时间最长的key移除</span>
+<span class="token comment"># maxmemory-samples 5</span>
+
+<span class="token comment"># 是否开启salve的最大内存</span>
+<span class="token comment"># replica-ignore-maxmemory yes</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div></li> <li><p>AOF配置</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># Redis 默认不开启。它的出现是为了弥补RDB的不足（数据的不一致性），所以它采用日志的形式来记录每个写操作，</span>
+<span class="token comment"># 并追加到文件中。Redis 重启的会根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作</span>
+<span class="token comment"># 默认redis使用的是rdb方式持久化，这种方式在许多应用中已经足够用了。</span>
+<span class="token comment"># 但是redis如果中途宕机，会导致可能有几分钟的数据丢失，根据save来策略进行持久化，</span>
+<span class="token comment"># Append Only File是另一种持久化方式，可以提供更好的持久化特性。</span>
+<span class="token comment"># Redis会把每次写入的数据在接收后都写入 appendonly.aof 文件，</span>
+<span class="token comment"># 每次启动时Redis都会先把这个文件的数据读入内存里，先忽略RDB文件。若开启rdb则将no改为yes</span>
+appendonly no
+ 
+<span class="token comment"># 指定本地数据库文件名，默认值为 appendonly.aof</span>
+appendfilename <span class="token string">&quot;appendonly.aof&quot;</span>
+ 
+ 
+<span class="token comment"># aof持久化策略的配置</span>
+<span class="token comment"># no表示不执行fsync，由操作系统保证数据同步到磁盘，速度最快</span>
+<span class="token comment"># always表示每次写入都执行fsync，以保证数据同步到磁盘</span>
+<span class="token comment"># everysec表示每秒执行一次fsync，可能会导致丢失这1s数据</span>
+<span class="token comment"># appendfsync always</span>
+appendfsync everysec
+<span class="token comment"># appendfsync no</span>
+ 
+<span class="token comment"># 在aof重写或者写入rdb文件的时候，会执行大量IO，此时对于everysec和always的aof模式来说，</span>
+<span class="token comment"># 执行fsync会造成阻塞过长时间，no-appendfsync-on-rewrite字段设置为默认设置为no。如果对延迟要求很高的</span>
+<span class="token comment"># 应用，这个字段可以设置为yes，否则还是设置为no，这样对持久化特性来说这是更安全的选择。</span>
+<span class="token comment"># 设置为yes表示rewrite期间对新写操作不fsync,暂时存在内存中,等rewrite完成后再写入，默认为no，建议yes。</span>
+<span class="token comment"># Linux的默认fsync策略是30秒。可能丢失30秒数据</span>
+no-appendfsync-on-rewrite no
+ 
+<span class="token comment"># aof自动重写配置。当目前aof文件大小超过上一次重写的aof文件大小的百分之多少进行重写，即当aof文件</span>
+<span class="token comment"># 增长到一定大小的时候Redis能够调用bgrewriteaof对日志文件进行重写。当前AOF文件大小是上次日志重写得</span>
+<span class="token comment"># 到AOF文件大小的二倍（设置为100）时，自动启动新的日志重写过程</span>
+auto-aof-rewrite-percentage <span class="token number">100</span>
+ 
+<span class="token comment"># 设置允许重写的最小aof文件大小，避免了达到约定百分比但尺寸仍然很小的情况还要重写</span>
+auto-aof-rewrite-min-size 64mb
+ 
+<span class="token comment"># aof文件可能在尾部是不完整的，当redis启动的时候，aof文件的数据被载入内存。重启可能发生在redis所</span>
+<span class="token comment"># 在的主机操作系统宕机后，尤其在ext4文件系统没有加上data=ordered选项（redis宕机或者异常终止不会造</span>
+<span class="token comment"># 成尾部不完整现象。）出现这种现象，可以选择让redis退出，或者导入尽可能多的数据。如果选择的是yes，</span>
+<span class="token comment"># 当截断的aof文件被导入的时候，会自动发布一个log给客户端然后load。</span>
+<span class="token comment"># 如果是no，用户必须手动redis-check-aof修复AOF文件才可以</span>
+aof-load-truncated <span class="token function">yes</span>
+ 
+<span class="token comment"># 加载redis时，可以识别AOF文件以&quot;redis&quot;开头。</span>
+<span class="token comment"># 字符串并加载带前缀的RDB文件，然后继续加载AOF尾巴</span>
+aof-use-rdb-preamble <span class="token function">yes</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br></div></div></li></ul></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">最后更新时间:</span> <span class="time">2021/7/28 下午10:10:23</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/database/notes/Redis-1-NoSQL与Redis.html" class="prev">
+        NoSQL与Redis
+      </a></span> <span class="next"><a href="/database/notes/Redis-3-Redis集群与进阶.html">
+        Redis集群与进阶
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><APlayer audio="" fixed="true" mini="true" theme="#b7daff" loop="loop" order="random" preload="auto" volume="0.15" mutex="true" lrc-type="0" list-max-height="250" storage-name="vuepress-plugin-meting" id="aplayer-fixed"></APlayer><div id="live2d-widget" class="live2d-widget-container" style="position:fixed;right:10px;bottom:-55px;width:135px;height:300px;z-index:99999;opacity:0.8;pointer-events:none;"><canvas id="live2d_canvas" width="135" height="300" class="live2d_canvas" style="position:absolute;left:0px;top:0px;width:135px;height:300px;"></canvas></div></div></div>
+    <script src="/assets/js/app.04bbdb00.js" defer></script><script src="/assets/js/2.57a2f5e8.js" defer></script><script src="/assets/js/10.27d123b5.js" defer></script>
+  </body>
+</html>
