@@ -1,5 +1,0 @@
-<<<<<<< HEAD:assets/js/3.6088d17d.js
-(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{409:function(t,e,n){},431:function(t,e,n){"use strict";n(409)},478:function(t,e,n){"use strict";n.r(e);var i={functional:!0,props:{type:{type:String,default:"tip"},text:String,vertical:{type:String,default:"top"}},render:function(t,e){var n=e.props,i=e.slots;return t("span",{class:["badge",n.type],style:{verticalAlign:n.vertical}},n.text||i().default)}},r=(n(431),n(19)),p=Object(r.a)(i,void 0,void 0,!1,null,"2320fe50",null);e.default=p.exports}}]);
-=======
-(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{418:function(t,e,n){},440:function(t,e,n){"use strict";n(418)},485:function(t,e,n){"use strict";n.r(e);var i={functional:!0,props:{type:{type:String,default:"tip"},text:String,vertical:{type:String,default:"top"}},render:function(t,e){var n=e.props,i=e.slots;return t("span",{class:["badge",n.type],style:{verticalAlign:n.vertical}},n.text||i().default)}},r=(n(440),n(20)),p=Object(r.a)(i,void 0,void 0,!1,null,"43f17e18",null);e.default=p.exports}}]);
->>>>>>> ceefd0189b2bd0e88ffb3c6b673e7aa07f62c12c:assets/js/3.c1cc9fb3.js
